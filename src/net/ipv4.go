@@ -12,8 +12,24 @@ type IPv4Info struct {
 	DestinationAddress [4]byte
 }
 
-func bitshift(raw byte) byte {
-	return 0xF0
+func handlePacket(packet []byte, allowedSource [4]byte, inject func([]byte) error) error {
+	packetIPv4Info, err := ParseIPv4(packet)
+	if err != nil {
+		return err
+	}
+
+	if packetIPv4Info.SourceAddress != allowedSource {
+		return fmt.Errorf("source address and allowed packet adress are not the same")
+	}
+
+	if inject == nil {
+		return fmt.Errorf("inject function must be non nill")
+	}
+	if err := inject(packet); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func ParseIPv4(packet []byte) (IPv4Info, error) {

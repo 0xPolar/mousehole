@@ -1,0 +1,480 @@
+{
+  "projectId": "local-vpn",
+  "milestoneId": "ipv4-structure",
+  "at": "2026-10-23T22:33:00.584Z",
+  "fingerprint": "76e46cea0a87c0605a94c100b26b95893b7c48ce364935458f5cb91f213592d8",
+  "passed": true,
+  "test": {
+    "stdout": "{\"cases\":[{\"id\":\"minimum-header\",\"passed\":true,\"expected\":{\"accepted\":true,\"headerLength\":20,\"totalLength\":20,\"source\":[10,80,0,2],\"destination\":[10,80,0,1]},\"actual\":{\"accepted\":true,\"destination\":[10,80,0,1],\"headerLength\":20,\"source\":[10,80,0,2],\"totalLength\":20}},{\"id\":\"header-with-payload\",\"passed\":true,\"expected\":{\"accepted\":true,\"headerLength\":20,\"totalLength\":40,\"source\":[192,0,2,7],\"destination\":[198,51,100,9]},\"actual\":{\"accepted\":true,\"destination\":[198,51,100,9],\"headerLength\":20,\"source\":[192,0,2,7],\"totalLength\":40}},{\"id\":\"options-opaque\",\"passed\":true,\"expected\":{\"accepted\":true,\"headerLength\":24,\"totalLength\":40,\"source\":[10,80,0,2],\"destination\":[10,80,0,1]},\"actual\":{\"accepted\":true,\"destination\":[10,80,0,1],\"headerLength\":24,\"source\":[10,80,0,2],\"totalLength\":40}},{\"id\":\"nil-input\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"short-input\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"capacity-is-not-data\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"wrong-version\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"ihl-too-small\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"missing-options\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"total-smaller-than-header\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"truncated-packet\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"trailing-data\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"big-endian-length\",\"passed\":true,\"expected\":{\"accepted\":true,\"headerLength\":20,\"totalLength\":256,\"source\":[203,0,113,1],\"destination\":[203,0,113,2]},\"actual\":{\"accepted\":true,\"destination\":[203,0,113,2],\"headerLength\":20,\"source\":[203,0,113,1],\"totalLength\":256}},{\"id\":\"review-ihl-0\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-ihl-1\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-ihl-2\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-ihl-3\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-ihl-4\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-short-0\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-short-1\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-short-3\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-short-12\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-largest-header\",\"passed\":true,\"expected\":{\"accepted\":true,\"headerLength\":60,\"totalLength\":60,\"source\":[255,1,128,0],\"destination\":[0,128,1,255]},\"actual\":{\"accepted\":true,\"destination\":[0,128,1,255],\"headerLength\":60,\"source\":[255,1,128,0],\"totalLength\":60}},{\"id\":\"review-missing-largest-header\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-max-total\",\"passed\":true,\"expected\":{\"accepted\":true,\"headerLength\":20,\"totalLength\":65535,\"source\":[0,0,0,0],\"destination\":[0,0,0,0]},\"actual\":{\"accepted\":true,\"destination\":[0,0,0,0],\"headerLength\":20,\"source\":[0,0,0,0],\"totalLength\":65535}},{\"id\":\"review-length-wrap\",\"passed\":true,\"expected\":{\"accepted\":false},\"actual\":{\"accepted\":false}},{\"id\":\"review-out-of-scope-fields\",\"passed\":true,\"expected\":{\"accepted\":true,\"headerLength\":24,\"totalLength\":24,\"source\":[0,0,0,0],\"destination\":[0,0,0,0]},\"actual\":{\"accepted\":true,\"destination\":[0,0,0,0],\"headerLength\":24,\"source\":[0,0,0,0],\"totalLength\":24}}]}\n",
+    "stderr": "minimum-header: passed=true\nheader-with-payload: passed=true\noptions-opaque: passed=true\nnil-input: passed=true\nshort-input: passed=true\ncapacity-is-not-data: passed=true\nwrong-version: passed=true\nihl-too-small: passed=true\nmissing-options: passed=true\ntotal-smaller-than-header: passed=true\ntruncated-packet: passed=true\ntrailing-data: passed=true\nbig-endian-length: passed=true\nreview-ihl-0: passed=true\nreview-ihl-1: passed=true\nreview-ihl-2: passed=true\nreview-ihl-3: passed=true\nreview-ihl-4: passed=true\nreview-short-0: passed=true\nreview-short-1: passed=true\nreview-short-3: passed=true\nreview-short-12: passed=true\nreview-largest-header: passed=true\nreview-missing-largest-header: passed=true\nreview-max-total: passed=true\nreview-length-wrap: passed=true\nreview-out-of-scope-fields: passed=true\n",
+    "code": 0
+  },
+  "cases": [
+    {
+      "id": "minimum-header",
+      "passed": true,
+      "expected": {
+        "accepted": true,
+        "headerLength": 20,
+        "totalLength": 20,
+        "source": [
+          10,
+          80,
+          0,
+          2
+        ],
+        "destination": [
+          10,
+          80,
+          0,
+          1
+        ]
+      },
+      "actual": {
+        "accepted": true,
+        "destination": [
+          10,
+          80,
+          0,
+          1
+        ],
+        "headerLength": 20,
+        "source": [
+          10,
+          80,
+          0,
+          2
+        ],
+        "totalLength": 20
+      }
+    },
+    {
+      "id": "header-with-payload",
+      "passed": true,
+      "expected": {
+        "accepted": true,
+        "headerLength": 20,
+        "totalLength": 40,
+        "source": [
+          192,
+          0,
+          2,
+          7
+        ],
+        "destination": [
+          198,
+          51,
+          100,
+          9
+        ]
+      },
+      "actual": {
+        "accepted": true,
+        "destination": [
+          198,
+          51,
+          100,
+          9
+        ],
+        "headerLength": 20,
+        "source": [
+          192,
+          0,
+          2,
+          7
+        ],
+        "totalLength": 40
+      }
+    },
+    {
+      "id": "options-opaque",
+      "passed": true,
+      "expected": {
+        "accepted": true,
+        "headerLength": 24,
+        "totalLength": 40,
+        "source": [
+          10,
+          80,
+          0,
+          2
+        ],
+        "destination": [
+          10,
+          80,
+          0,
+          1
+        ]
+      },
+      "actual": {
+        "accepted": true,
+        "destination": [
+          10,
+          80,
+          0,
+          1
+        ],
+        "headerLength": 24,
+        "source": [
+          10,
+          80,
+          0,
+          2
+        ],
+        "totalLength": 40
+      }
+    },
+    {
+      "id": "nil-input",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "short-input",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "capacity-is-not-data",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "wrong-version",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "ihl-too-small",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "missing-options",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "total-smaller-than-header",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "truncated-packet",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "trailing-data",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "big-endian-length",
+      "passed": true,
+      "expected": {
+        "accepted": true,
+        "headerLength": 20,
+        "totalLength": 256,
+        "source": [
+          203,
+          0,
+          113,
+          1
+        ],
+        "destination": [
+          203,
+          0,
+          113,
+          2
+        ]
+      },
+      "actual": {
+        "accepted": true,
+        "destination": [
+          203,
+          0,
+          113,
+          2
+        ],
+        "headerLength": 20,
+        "source": [
+          203,
+          0,
+          113,
+          1
+        ],
+        "totalLength": 256
+      }
+    },
+    {
+      "id": "review-ihl-0",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-ihl-1",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-ihl-2",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-ihl-3",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-ihl-4",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-short-0",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-short-1",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-short-3",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-short-12",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-largest-header",
+      "passed": true,
+      "expected": {
+        "accepted": true,
+        "headerLength": 60,
+        "totalLength": 60,
+        "source": [
+          255,
+          1,
+          128,
+          0
+        ],
+        "destination": [
+          0,
+          128,
+          1,
+          255
+        ]
+      },
+      "actual": {
+        "accepted": true,
+        "destination": [
+          0,
+          128,
+          1,
+          255
+        ],
+        "headerLength": 60,
+        "source": [
+          255,
+          1,
+          128,
+          0
+        ],
+        "totalLength": 60
+      }
+    },
+    {
+      "id": "review-missing-largest-header",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-max-total",
+      "passed": true,
+      "expected": {
+        "accepted": true,
+        "headerLength": 20,
+        "totalLength": 65535,
+        "source": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "destination": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "actual": {
+        "accepted": true,
+        "destination": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "headerLength": 20,
+        "source": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "totalLength": 65535
+      }
+    },
+    {
+      "id": "review-length-wrap",
+      "passed": true,
+      "expected": {
+        "accepted": false
+      },
+      "actual": {
+        "accepted": false
+      }
+    },
+    {
+      "id": "review-out-of-scope-fields",
+      "passed": true,
+      "expected": {
+        "accepted": true,
+        "headerLength": 24,
+        "totalLength": 24,
+        "source": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "destination": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "actual": {
+        "accepted": true,
+        "destination": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "headerLength": 24,
+        "source": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "totalLength": 24
+      }
+    }
+  ]
+}

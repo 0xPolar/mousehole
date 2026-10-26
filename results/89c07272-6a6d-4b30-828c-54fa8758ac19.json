@@ -1,0 +1,14 @@
+{
+  "projectId": "local-vpn",
+  "milestoneId": "ipv4-structure",
+  "at": "2026-10-23T22:32:42.372Z",
+  "fingerprint": "4c591449ae15a7dda8d3026e3bb2f400a5f3a304f1a5933f83e30e2352bd074d",
+  "passed": false,
+  "error": "Error: Harness must report exactly the selected cases",
+  "test": {
+    "stdout": "{\"cases\":[]}\n",
+    "stderr": "open project.json: no such file or directory\nexit status 1\n",
+    "code": 1
+  },
+  "cases": []
+}

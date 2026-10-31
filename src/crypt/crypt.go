@@ -34,6 +34,22 @@ func savePrivateKey(key ed25519.PrivateKey) error {
 	if err != nil {
 		return fmt.Errorf("failed to marshall private key: %v", err)
 	}
+
+	block := &pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: keyBytes,
+	}
+
+	file, err := os.Create("private.pem")
+	if err != nil {
+		return fmt.Errorf("Failed to create private key pem file: %v", err)
+	}
+	defer file.Close()
+
+	if err := pem.Encode(file, block); err != nil {
+		return fmt.Errorf("Failed to save privaete key to pem file: %v", err)
+	}
+	return nil
 }
 
 func savePublicKey(key ed25519.PublicKey) error {

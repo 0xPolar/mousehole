@@ -9,8 +9,7 @@ import (
 )
 
 type signer struct {
-	public  string
-	private string
+	keys keyPair
 }
 
 type keyPair struct {
@@ -27,7 +26,17 @@ func genKeys() (keyPair, error) {
 	return keyPair{pub, priv}, nil
 }
 
-func (s *signer) Save() error
+func (s *signer) Save() error {
+	if err := savePrivateKey(s.keys.private); err != nil {
+		return err
+	}
+
+	if err := savePublicKey(s.keys.public); err != nil {
+		return err
+	}
+
+	return nil
+}
 
 func savePrivateKey(key ed25519.PrivateKey) error {
 	keyBytes, err := x509.MarshalPKCS8PrivateKey(key)

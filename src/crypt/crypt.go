@@ -29,10 +29,17 @@ func genKeys() (keyPair, error) {
 
 func (s *signer) Save() error
 
-func savePublicKey(key ed25519.PublicKey) error {
+func savePrivateKey(key ed25519.PrivateKey) error {
 	keyBytes, err := x509.MarshalPKCS8PrivateKey(key)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to marshall private key: %v", err)
+	}
+}
+
+func savePublicKey(key ed25519.PublicKey) error {
+	keyBytes, err := x509.MarshalPKCS8PublicKey(key)
+	if err != nil {
+		return fmt.Errorf("failed to marshall public key: %v", err)
 	}
 
 	block := &pem.Block{
@@ -47,7 +54,7 @@ func savePublicKey(key ed25519.PublicKey) error {
 	defer file.Close()
 
 	if err := pem.Encode(file, block); err != nil {
-		return fmt.Errorf("Failed to save private key to pem file: %v", err)
+		return fmt.Errorf("Failed to save public key to pem file: %v", err)
 	}
 	return nil
 }

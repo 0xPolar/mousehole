@@ -5,10 +5,21 @@ import (
 	"os"
 )
 
+func validateFileExists(path string) error {
+	_, err := os.Stat(path)
+	if err != nil {
+		return fmt.Errorf("file does not exist")
+	}
+	return nil
+}
+
 func handle_create(args []string) error {
 	command := args[0]
 	path := args[1]
 	if command == "--file" {
+		if err := validateFileExists(path); err != nil {
+			return err
+		}
 	} else {
 		return fmt.Errorf("not supported sub command")
 	}
@@ -19,6 +30,9 @@ func handle_pin(args []string) error {
 	command := args[0]
 	path := args[1]
 	if command == "--file" {
+		if err := validateFileExists(path); err != nil {
+			return err
+		}
 	} else {
 		return fmt.Errorf("not supported sub command")
 	}
@@ -48,6 +62,7 @@ func main() {
 	args := os.Args[1:]
 
 	if err := handle_args(args); err != nil {
+		fmt.Fprintln(os.Stderr, "error: ", err)
 		os.Exit(-1)
 	}
 }

@@ -36,7 +36,7 @@ func savePrivateKey(key ed25519.PrivateKey) error {
 	}
 
 	block := &pem.Block{
-		Type:  "RSA PRIVATE KEY",
+		Type:  "PRIVATE KEY",
 		Bytes: keyBytes,
 	}
 
@@ -53,7 +53,7 @@ func savePrivateKey(key ed25519.PrivateKey) error {
 }
 
 func savePublicKey(key ed25519.PublicKey) error {
-	keyBytes, err := x509.MarshalPKCS8PublicKey(key)
+	keyBytes, err := x509.MarshalPKIXPublicKey(key)
 	if err != nil {
 		return fmt.Errorf("failed to marshall public key: %v", err)
 	}

@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-type signer struct {
+type DefaultSigner struct {
 	keys keyPair
 }
 
@@ -26,7 +26,7 @@ func genKeys() (keyPair, error) {
 	return keyPair{pub, priv}, nil
 }
 
-func (s *signer) Save() error {
+func (s *DefaultSigner) Save() error {
 	if err := savePrivateKey(s.keys.private); err != nil {
 		return err
 	}

@@ -30,7 +30,7 @@ func genKeys() (keyPair, error) {
 func (s *signer) Save() error
 
 func savePublicKey(key ed25519.PublicKey) error {
-	keyBytes, err := x509.MarshalPKCS1PublicKey(key)
+	keyBytes, err := x509.MarshalPKCS8PrivateKey(key)
 	if err != nil {
 		return err
 	}

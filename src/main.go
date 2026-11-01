@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"mousehole/src/crypt"
 )
 
 func validateFileExists(path string) error {
@@ -17,7 +19,9 @@ func handle_create(args []string) error {
 	command := args[0]
 	path := args[1]
 	if command == "--file" {
-		//
+		signer := crypt.NewSigner()
+		signer.New()
+		signer.Save(path)
 	} else {
 		return fmt.Errorf("not supported sub command")
 	}
@@ -31,7 +35,9 @@ func handle_pin(args []string) error {
 		if err := validateFileExists(path); err != nil {
 			return err
 		}
-		//
+		signer := crypt.NewSigner()
+
+		signer.Load(path)
 	} else {
 		return fmt.Errorf("not supported sub command")
 	}

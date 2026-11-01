@@ -8,12 +8,14 @@ import (
 	"os"
 )
 
+var signer = &DefaultSigner{}
+
 type DefaultSigner struct {
 	keys keyPair
 }
 
-func NewSigner() DefaultSigner {
-	return DefaultSigner{}
+func NewSigner() *DefaultSigner {
+	return signer
 }
 
 func (s *DefaultSigner) New() error {
@@ -41,19 +43,19 @@ func genKeys() (keyPair, error) {
 	return keyPair{pub, priv}, nil
 }
 
-func (s *DefaultSigner) Save() error {
-	if err := savePrivateKey(s.keys.private); err != nil {
+func (s *DefaultSigner) Save(filepath string) error {
+	if err := savePrivateKey(s.keys.private, filepath); err != nil {
 		return err
 	}
 
-	if err := savePublicKey(s.keys.public); err != nil {
+	if err := savePublicKey(s.keys.public, filepath); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func savePrivateKey(key ed25519.PrivateKey) error {
+func savePrivateKey(key ed25519.PrivateKey, filepath string) error {
 	keyBytes, err := x509.MarshalPKCS8PrivateKey(key)
 	if err != nil {
 		return fmt.Errorf("failed to marshall private key: %v", err)
@@ -64,7 +66,7 @@ func savePrivateKey(key ed25519.PrivateKey) error {
 		Bytes: keyBytes,
 	}
 
-	file, err := os.Create("private.pem")
+	file, err := os.Create(filepath)
 	if err != nil {
 		return fmt.Errorf("Failed to create private key pem file: %v", err)
 	}
@@ -76,7 +78,7 @@ func savePrivateKey(key ed25519.PrivateKey) error {
 	return nil
 }
 
-func savePublicKey(key ed25519.PublicKey) error {
+func savePublicKey(key ed25519.PublicKey, filepath string) error {
 	keyBytes, err := x509.MarshalPKIXPublicKey(key)
 	if err != nil {
 		return fmt.Errorf("failed to marshall public key: %v", err)
@@ -87,7 +89,7 @@ func savePublicKey(key ed25519.PublicKey) error {
 		Bytes: keyBytes,
 	}
 
-	file, err := os.Create("public.pem")
+	file, err := os.Create(filepath)
 	if err != nil {
 		return fmt.Errorf("Failed to create public key pem file: %v", err)
 	}
@@ -99,15 +101,17 @@ func savePublicKey(key ed25519.PublicKey) error {
 	return nil
 }
 
-func (s *DefaultSigner) Load() error {
+func (s *DefaultSigner) Load(filepath string) error {
 	var key ed25519.PrivateKey
 	var err error
-	if key, err = loadPrivateKey("private.pem"); err != nil {
+	if key, err = loadPrivateKey(filepath); err != nil {
 		return err
 	}
 
-	s.keys.private = key
-
+	s.keys = keyPair{
+		private: key,
+		public:  key.Public().(ed25519.PublicKey),
+	}
 	return nil
 }
 

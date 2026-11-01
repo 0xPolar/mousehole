@@ -84,7 +84,17 @@ func savePublicKey(key ed25519.PublicKey) error {
 	return nil
 }
 
-func (s *DefaultSigner) Load() error
+func (s *DefaultSigner) Load() error {
+	var key ed25519.PrivateKey
+	var err error
+	if key, err = loadPrivateKey("private.pem"); err != nil {
+		return err
+	}
+
+	s.keys.private = key
+
+	return nil
+}
 
 func loadPrivateKey(filePath string) (ed25519.PrivateKey, error) {
 	data, err := os.ReadFile(filePath)

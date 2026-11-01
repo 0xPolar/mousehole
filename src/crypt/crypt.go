@@ -12,6 +12,21 @@ type DefaultSigner struct {
 	keys keyPair
 }
 
+func NewSigner() DefaultSigner {
+	return DefaultSigner{}
+}
+
+func (s *DefaultSigner) New() error {
+	keys, err := genKeys()
+	if err != nil {
+		return err
+	}
+
+	s.keys = keys
+
+	return nil
+}
+
 type keyPair struct {
 	public  ed25519.PublicKey
 	private ed25519.PrivateKey

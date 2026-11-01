@@ -17,9 +17,7 @@ func handle_create(args []string) error {
 	command := args[0]
 	path := args[1]
 	if command == "--file" {
-		if err := validateFileExists(path); err != nil {
-			return err
-		}
+		//
 	} else {
 		return fmt.Errorf("not supported sub command")
 	}
@@ -33,6 +31,7 @@ func handle_pin(args []string) error {
 		if err := validateFileExists(path); err != nil {
 			return err
 		}
+		//
 	} else {
 		return fmt.Errorf("not supported sub command")
 	}

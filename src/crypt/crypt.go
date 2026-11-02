@@ -48,10 +48,6 @@ func (s *DefaultSigner) Save(filepath string) error {
 		return err
 	}
 
-	if err := savePublicKey(s.keys.public, filepath); err != nil {
-		return err
-	}
-
 	return nil
 }
 

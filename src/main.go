@@ -44,7 +44,7 @@ func handle_pin(args []string) error {
 	return nil
 }
 
-func handle_args(argsv []string) error {
+func handle_identity(argsv []string) error {
 	argsc := len(argsv)
 	if argsc != 3 {
 		return fmt.Errorf("command line arguments are incorrect!")
@@ -56,6 +56,22 @@ func handle_args(argsv []string) error {
 		break
 	case "pin":
 		handle_pin(argsv[1:])
+		break
+	default:
+		return fmt.Errorf("command line argument is not suported")
+	}
+	return nil
+}
+
+func handle_args(argsv []string) error {
+	argsc := len(argsv)
+	if argsc != 3 {
+		return fmt.Errorf("command line arguments are incorrect!")
+	}
+
+	switch command := argsv[0]; command {
+	case "identity":
+		handle_identity(argsv[1:])
 		break
 	default:
 		return fmt.Errorf("command line argument is not suported")

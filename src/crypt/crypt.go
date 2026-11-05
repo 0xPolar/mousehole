@@ -62,7 +62,10 @@ func savePrivateKey(key ed25519.PrivateKey, filepath string) error {
 		Bytes: keyBytes,
 	}
 
-	file, err := os.Create(filepath)
+	file, err := os.OpenFile(
+		filepath,
+		os.O_WRONLY|os.O_CREATE|os.O_EXCL,
+		0o600)
 	if err != nil {
 		return fmt.Errorf("Failed to create private key pem file: %v", err)
 	}
@@ -71,6 +74,8 @@ func savePrivateKey(key ed25519.PrivateKey, filepath string) error {
 	if err := pem.Encode(file, block); err != nil {
 		return fmt.Errorf("Failed to save privaete key to pem file: %v", err)
 	}
+
+	fmt.Println("Successfuly Created File")
 	return nil
 }
 
